@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Chat Bot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <h1>AI Chat Bot</h1>
+        <span class="status">Online</span>
+      </header>
+
+      <main class="chat-window" id="chatWindow">
+        <div class="message bot">
+          Hello! I’m your AI assistant. Ask about projects, PDFs, or career guidance.
+        </div>
+      </main>
+
+      <form id="chatForm" class="composer">
+        <input id="messageInput" type="text" placeholder="Type your message..." autocomplete="off" required />
+        <button type="submit">Send</button>
+      </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>
