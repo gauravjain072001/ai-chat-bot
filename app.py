@@ -17,7 +17,31 @@ def generate_reply(message: str) -> str:
         return "Please type a message so I can help you."
 
     api_key = os.environ.get("OPENAI_API_KEY")
-    if api_key:
+    provider = os.environ.get("LLM_PROVIDER", "ollama" if not api_key else "openai").lower()
+
+    if provider == "ollama":
+        payload = {
+            "model": os.environ.get("OLLAMA_MODEL", "qwen2.5:3b"),
+            "messages": [
+                {"role": "system", "content": "You are a helpful assistant for software, product, and career questions. Be concise and accurate."},
+                {"role": "user", "content": message},
+            ],
+            "stream": False,
+        }
+        req = Request(
+            os.environ.get("OLLAMA_URL", "http://localhost:11434/api/chat"),
+            data=json.dumps(payload).encode("utf-8"),
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        try:
+            with urlopen(req, timeout=120) as response:
+                result = json.loads(response.read().decode("utf-8"))
+            return result["message"]["content"].strip()
+        except (HTTPError, URLError, KeyError, json.JSONDecodeError, TimeoutError):
+            return "Local Ollama is unavailable. Start Ollama and download the configured model, then try again."
+
+    if provider == "openai" and api_key:
         payload = {
             "model": os.environ.get("OPENAI_MODEL", "gpt-4o-mini"),
             "messages": [

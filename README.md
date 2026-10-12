@@ -1,10 +1,11 @@
 # AI Chat Bot
 
-A Flask conversational assistant with an OpenAI-compatible LLM integration and a deterministic demo fallback when no API key is configured.
+A Flask conversational assistant with local Ollama support, optional OpenAI API support, and a deterministic demo fallback.
 
 ## Features
 - Real-time chat interface
-- Context-aware LLM responses when configured
+- Local LLM responses through Ollama (no per-request API charge)
+- Optional OpenAI API responses
 - No-key demo mode for local testing
 - Easy to extend with OpenAI or other LLM APIs
 
@@ -19,4 +20,10 @@ python app.py
 
 Open http://localhost:5000
 
-To enable LLM responses, copy `.env.example` to `.env`, add your API key, then start the app. You can optionally change `OPENAI_MODEL` (defaults to `gpt-4o-mini`). The `.env` file is ignored by Git; never commit or share your API key.
+Install [Ollama](https://ollama.com/download/windows), then download the local model once:
+
+```powershell
+ollama pull qwen2.5:3b
+```
+
+Copy `.env.example` to `.env`, keep `LLM_PROVIDER=ollama`, and start the app. Ollama must be running locally. To use the optional paid OpenAI API instead, set `LLM_PROVIDER=openai` and add `OPENAI_API_KEY` in `.env`. The `.env` file is ignored by Git.
