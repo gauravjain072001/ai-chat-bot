@@ -19,4 +19,4 @@ python app.py
 
 Open http://localhost:5000
 
-To enable LLM responses, set `OPENAI_API_KEY` before starting the app. You can optionally set `OPENAI_MODEL` (defaults to `gpt-4o-mini`). Never commit API keys.
+To enable LLM responses, copy `.env.example` to `.env`, add your API key, then start the app. You can optionally change `OPENAI_MODEL` (defaults to `gpt-4o-mini`). The `.env` file is ignored by Git; never commit or share your API key.
