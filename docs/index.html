@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Chat Bot Demo</title>
+  <style>
+    :root{color-scheme:dark;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#101820;color:#eef3f5}*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse at 12% 5%,#214c45 0,transparent 38%),#101820}.app{width:min(760px,100%);border:1px solid #41615b;background:#162322;border-radius:16px;overflow:hidden;box-shadow:0 24px 80px #0006}.top{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid #344b47}.top h1{margin:0;font-size:20px}.badge{font-size:12px;color:#b8e7d7;background:#25483d;border-radius:20px;padding:7px 10px}.messages{height:min(58vh,500px);min-height:320px;overflow:auto;padding:24px;display:flex;flex-direction:column;gap:12px}.msg{max-width:82%;padding:12px 15px;border-radius:14px;background:#243a35;line-height:1.5;white-space:pre-wrap}.msg.user{align-self:flex-end;background:#b9e8d6;color:#13211c}.composer{display:flex;gap:10px;padding:18px;border-top:1px solid #344b47}.composer input{min-width:0;flex:1;border:1px solid #526762;border-radius:10px;background:#101b19;color:#fff;padding:13px;font:inherit}.composer button{border:0;border-radius:10px;background:#a9dec9;color:#102019;padding:0 20px;font-weight:700;cursor:pointer}.foot{font-size:12px;color:#b4c6c1;padding:0 24px 18px}.foot a{color:#b9e8d6}@media(max-width:480px){body{padding:10px}.top{padding:16px}.messages{padding:16px}.composer{padding:12px}.msg{max-width:92%}}
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="top"><h1>AI Chat Bot</h1><span class="badge">Interactive demo</span></header>
+    <section class="messages" id="messages" aria-live="polite"><div class="msg">Hi! Ask me about software projects, PDFs, or career planning.</div></section>
+    <form class="composer" id="form"><input id="input" aria-label="Message" placeholder="Write a message..." autocomplete="off" required><button>Send</button></form>
+    <p class="foot">This browser demo uses sample responses. The repository includes optional local Ollama integration. <a href="https://github.com/gauravjain072001/ai-chat-bot">View source</a></p>
+  </main>
+  <script>
+    const messages=document.getElementById('messages');
+    const form=document.getElementById('form');
+    const input=document.getElementById('input');
+    function add(text,who=''){const node=document.createElement('div');node.className=`msg ${who}`;node.textContent=text;messages.append(node);messages.scrollTop=messages.scrollHeight;}
+    form.addEventListener('submit',event=>{event.preventDefault();const text=input.value.trim();if(!text)return;add(text,'user');input.value='';const query=text.toLowerCase();let reply='I can help explore software project ideas, PDF workflows, or career planning. Try asking about one of those topics.';if(/hello|hi\b/.test(query))reply='Hello! What are you working on today?';else if(/pdf|document|report/.test(query))reply='For a PDF workflow, define the document title, organize the content into sections, and export a print-ready file.';else if(/career|job|role/.test(query))reply='A good next step is to compare your current skills with roles that interest you, then choose one focused project to close the biggest gap.';else if(/project|build|app/.test(query))reply='Start with one user problem, build the smallest useful version, and test it with someone who has that problem.';setTimeout(()=>add(reply),250);});
+  </script>
+</body>
+</html>
